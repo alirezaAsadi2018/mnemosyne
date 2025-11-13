@@ -8,6 +8,7 @@ import (
 	"math/rand"
 	"sync"
 	"time"
+	"runtime/debug"
 
 	"github.com/allegro/bigcache/v3"
 	"github.com/redis/go-redis/v9"
@@ -186,6 +187,9 @@ func (cr *cache) get(key string) (*cachableRet, error) {
 		rawBytes = []byte(strValue)
 	}
 	if err != nil {
+		logrus.WithFields(logrus.Fields{
+			"stack": string(debug.Stack()),
+		}).WithError(err).Error("mnemosyne error while getting from redis")
 		return nil, err
 	}
 	var finalBytes []byte
