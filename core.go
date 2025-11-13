@@ -135,7 +135,7 @@ func (mn *MnemosyneInstance) get(ctx context.Context, key string) (*cachableRet,
 	for i, layer := range mn.cacheLayers {
 		result, err := layer.withContext(ctx).get(key)
 		if err == nil {
-			mn.cacheWatcher.Inc(mn.name, fmt.Sprintf("layer%d", i))
+			mn.cacheWatcher.Inc(mn.name, fmt.Sprintf("layer%d-%s", i, layer.layerName))
 			go mn.fillUpperLayers(ctx, key, result, i)
 			return result, nil
 		}
