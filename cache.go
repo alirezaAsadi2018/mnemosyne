@@ -186,6 +186,7 @@ func (cr *cache) get(key string) (*cachableRet, error) {
 		rawBytes = []byte(strValue)
 	}
 	if err != nil {
+		logrus.WithError(err).Fatal("mnemosyne error while getting from redis")
 		return nil, err
 	}
 	var finalBytes []byte
