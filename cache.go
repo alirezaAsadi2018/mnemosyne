@@ -188,6 +188,7 @@ func (cr *cache) get(key string) (*cachableRet, error) {
 	}
 	if err != nil {
 		logrus.WithFields(logrus.Fields{
+			"key": key,
 			"stack": string(debug.Stack()),
 		}).WithError(err).Error("mnemosyne error while getting from redis")
 		return nil, err
